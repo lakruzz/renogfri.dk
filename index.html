@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0-Moms på Rene Råvarer | Borgerforslag</title>
+    <script type="module" src="/src/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Fresh & Organic -->
+    <!-- Primary: #F7F5F0 (Warm Off-white/Oatmeal) -->
+    <!-- Secondary: #2F855A (Fresh Leaf Green) -->
+    <!-- Accent: #C05621 (Warm Terra Cotta/Tomato) -->
+    <!-- Text: #2D3748 (Dark Slate) -->
+    
+    <style>
+        body {
+            background-color: #F7F5F0;
+            color: #2D3748;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .interactive-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .interactive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #2F855A;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #2F855A;
+        }
+    </style>
+    
+    <!-- Application Structure Plan: 
+         1. Hero Section: Immediate hook - "Make the healthy choice the cheapest choice".
+         2. Concept Visualizer: Interactive tool to define "One Ingredient" vs "Ultra-Processed".
+         3. Price Simulator: A split-screen calculator showing the 25% savings on a home-cooked meal vs. processed.
+         4. Economic Logic: Charts showing the cost of the proposal vs. cost of obesity (Investment logic).
+         5. Implementation Flow: Step-by-step guide to GS1 integration and producer responsibility.
+         6. Vision/Social: The "Ren & Fri" recipe universe concept.
+         7. CTA: Link to citizen proposal logic.
+         
+         Rationale: The user needs to understand *why* this radical proposal works (simplicity) and *how* it benefits them directly (price). 
+    -->
+
+    <!-- Visualization & Content Choices:
+         - Price Simulator: JS-driven HTML list calculation. Goal: Show direct personal benefit ("Time-tax-deduction").
+         - Comparison Charts: Chart.js Bar/Pie charts. Goal: Visualize the macro-economic argument (17bn cost vs 10bn+ savings).
+         - NOVA Explainer: Interactive Accordion/Cards. Goal: Explain the scientific basis without dense text.
+         - NO SVG/Mermaid confirmed.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="font-sans antialiased leading-relaxed">
+
+    <!-- Navigation -->
+    <nav class="bg-organic-card shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-organic-green font-serif">Ren & Fri</span>
+                </div>
+                <div class="hidden sm:flex space-x-8 items-center">
+                    <a href="#concept" class="text-gray-600 hover:text-organic-green font-medium">Konceptet</a>
+                    <a href="#simulator" class="text-gray-600 hover:text-organic-green font-medium">Din Besparelse</a>
+                    <a href="#economics" class="text-gray-600 hover:text-organic-green font-medium">Økonomien</a>
+                    <a href="#implementation" class="text-gray-600 hover:text-organic-green font-medium">Implementering</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-organic-card border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-organic-dark mb-6 font-serif tracking-tight">
+                Gør det sunde valg <br>til det <span class="text-organic-green">billigste valg</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
+                Vi foreslår 0% moms på varer med én ingrediens. 
+                <br>En simpel, effektiv model til at bekæmpe livsstilssygdomme og belønne maddannelse.
+            </p>
+        </div>
+    </header>
+
+    <!-- Concept Visualizer Section -->
+    <section id="concept" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-organic-dark font-serif">Hvad er en "Ren Vare"?</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    En ren vare har kun én ingrediens. Den er ikke ultra-processeret. 
+                    Her er et par eksempler til at illustrere forskellen.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <!-- Card 1: Ren Vare -->
+                <div class="interactive-card bg-organic-card rounded-lg shadow-md p-6 border border-gray-200">
+                    <h3 class="text-2xl font-bold text-organic-green font-serif mb-4">✓ Ren Vare</h3>
+                    <p class="text-gray-700 mb-4"><strong>Eksempel:</strong> Et helt, uspoleret æble.</p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li><strong>Ingredienser:</strong> Æble.</li>
+                        <li><strong>NOVA Klassifikation:</strong> Gruppe 1 (Uforarbejdet).</li>
+                        <li><strong>Momsforslag:</strong> 0%</li>
+                    </ul>
+                </div>
+                <!-- Card 2: Ultra-processeret -->
+                <div class="interactive-card bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                    <h3 class="text-2xl font-bold text-accent-terra-cotta font-serif mb-4">✗ Ultra-processeret</h3>
+                    <p class="text-gray-700 mb-4"><strong>Eksempel:</strong> En æble-snack bar med tilsat sukker.</p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li><strong>Ingredienser:</strong> Æblepuré, fruktosesirup, palmeolie, aroma...</li>
+                        <li><strong>NOVA Klassifikation:</strong> Gruppe 4 (Ultra-processeret).</li>
+                        <li><strong>Momsforslag:</strong> 25%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Price Simulator Section -->
+    <section id="simulator" class="py-16 md:py-24 bg-organic-card">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-organic-dark font-serif">Se Din Besparelse</h2>
+                <p class="mt-4 text-lg text-gray-600">
+                    Sammenlign prisen på et hjemmelavet måltid med et ultra-processeret alternativ.
+                </p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex justify-center mb-6">
+                    <div class="relative w-64">
+                        <input type="checkbox" id="price-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer top-0"/>
+                        <label for="price-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                        <div class="absolute left-0 top-0 w-1/2 text-center font-bold text-organic-green">Hjemmelavet</div>
+                        <div class="absolute right-0 top-0 w-1/2 text-center font-bold text-gray-500">Færdigret</div>
+                    </div>
+                </div>
+
+                <div id="meal-homemade">
+                    <h3 class="text-2xl font-bold text-center text-organic-green font-serif mb-4">Hjemmelavet Bolognese (4 pers.)</h3>
+                    <ul id="ingredients-list" class="space-y-2">
+                        <!-- JS will populate this -->
+                    </ul>
+                    <div class="border-t-2 border-gray-200 mt-4 pt-4 text-right">
+                        <p class="text-lg">Subtotal: <span id="subtotal-homemade">0.00</span> kr.</p>
+                        <p class="text-lg text-red-500">Moms (25%): <span id="vat-homemade">0.00</span> kr.</p>
+                        <p class="text-2xl font-bold">Total (med moms): <span id="total-homemade">0.00</span> kr.</p>
+                        <p class="text-2xl font-bold text-organic-green mt-2">Total (uden moms): <span id="total-no-vat">0.00</span> kr.</p>
+                    </div>
+                </div>
+
+                <div id="meal-processed" class="hidden">
+                    <h3 class="text-2xl font-bold text-center text-accent-terra-cotta font-serif mb-4">Færdigret Bolognese (4 pers.)</h3>
+                    <div class="text-center">
+                        <p class="text-lg">Pris i supermarkedet: <span class="font-bold">120.00 kr.</span></p>
+                        <p class="text-sm text-gray-600">(Inkl. 25% moms)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Economic Logic Section -->
+    <section id="economics" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-organic-dark font-serif">Den Samfundsøkonomiske Gevinst</h2>
+                <p class="mt-4 text-lg text-gray-600">
+                    Forslaget er ikke en udgift, men en investering i folkesundheden.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="chart-container">
+                    <canvas id="cost-chart"></canvas>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-organic-dark font-serif mb-4">Investering vs. Udgift</h3>
+                    <p class="text-gray-700 mb-4">
+                        Årlige omkostninger ved svær overvægt i Danmark anslås til <strong class="text-accent-terra-cotta">17 milliarder kr.</strong>
+                        Momsfritagelsen for rene råvarer vil koste staten ca. <strong class="text-organic-green">10-12 milliarder kr.</strong> i tabt provenu.
+                    </p>
+                    <p class="text-gray-700">
+                        Selv en beskeden reduktion i sundhedsudgifterne vil gøre forslaget rentabelt for samfundet.
+                        Dette er en direkte investering i en sundere befolkning og en mere robust økonomi.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Section -->
+    <section id="implementation" class="py-16 md:py-24 bg-organic-card">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-organic-dark font-serif">Simpel Implementering</h2>
+                <p class="mt-4 text-lg text-gray-600">
+                    Modellen er designet til at være enkel at administrere for både stat og virksomheder.
+                </p>
+            </div>
+            <div class="space-y-8">
+                <!-- Step 1 -->
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-organic-green text-white flex items-center justify-center text-xl font-bold font-serif">1</div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-bold text-organic-dark">Varedeklaration via GS1</h3>
+                        <p class="mt-2 text-gray-700">
+                            Producenter angiver "antal ingredienser" i deres eksisterende GS1-varedata. 
+                            Systemet er allerede i brug af alle større producenter og grossister.
+                        </p>
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-organic-green text-white flex items-center justify-center text-xl font-bold font-serif">2</div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-bold text-organic-dark">Automatisk Momsstyring</h3>
+                        <p class="mt-2 text-gray-700">
+                            Supermarkedernes kasseterminaler henter automatisk ingrediens-data via varens stregkode og anvender 0% eller 25% moms.
+                            Ingen manuel indtastning er nødvendig.
+                        </p>
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-organic-green text-white flex items-center justify-center text-xl font-bold font-serif">3</div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-bold text-organic-dark">Kontrol og Ansvar</h3>
+                        <p class="mt-2 text-gray-700">
+                            Fødevarestyrelsen foretager stikprøvekontroller. Ansvaret for korrekt deklaration ligger hos producenten, præcis som i dag.
+                            Misbrug straffes med bøder.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision/Social Section -->
+    <section class="py-16 md:py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-organic-dark font-serif">Mere end bare Moms: En Bevægelse</h2>
+            <p class="mt-4 text-lg text-gray-600">
+                "Ren & Fri" er også en vision om at genopdage glæden ved rigtig mad. 
+                Vi vil bygge et opskrift-univers, hvor alle kan dele og finde inspiration til at lave sund, billig og lækker mad fra bunden.
+            </p>
+            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=2070&auto=format&fit=crop" alt="Fællesskab omkring madlavning" class="mt-8 rounded-lg shadow-lg mx-auto">
+        </div>
+    </section>
+
+    <!-- Footer / CTA -->
+    <footer class="bg-organic-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold font-serif">Er du enig?</h2>
+                <p class="mt-4 text-lg text-gray-300">
+                    Støt borgerforslaget og hjælp med at gøre det sunde valg til det billigste valg for alle i Danmark.
+                </p>
+                <a href="https://www.borgerforslag.dk/" target="_blank" rel="noopener noreferrer" 
+                   class="mt-8 inline-block bg-organic-green text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-green-700 transition-colors duration-300">
+                    Støt Forslaget Her
+                </a>
+            </div>
+            <div class="mt-12 border-t border-gray-700 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Ren & Fri. Et uafhængigt initiativ.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Chart.js: Economic Logic Chart
+        const costCtx = document.getElementById('cost-chart').getContext('2d');
+        new Chart(costCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Årlige Udgifter til Overvægt', 'Tabt Moms-provenu (Estimat)'],
+                datasets: [{
+                    label: 'Milliarder DKK',
+                    data: [17, 11],
+                    backgroundColor: [
+                        '#C05621', // accent-terra-cotta
+                        '#2F855A'  // organic-green
+                    ],
+                    borderColor: [
+                        '#A0401A',
+                        '#246B4A'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Sammenligning af Omkostninger (i mia. DKK)',
+                        font: {
+                            size: 16,
+                            family: "'Merriweather', serif"
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + ' mia.';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Price Simulator Logic
+        const ingredients = [
+            { name: 'Hakket Oksekød (500g)', price: 45.00 },
+            { name: 'Løg (2 stk)', price: 5.00 },
+            { name: 'Gulerødder (3 stk)', price: 6.00 },
+            { name: 'Hvidløg (1 fed)', price: 2.00 },
+            { name: 'Flåede Tomater (1 dåse)', price: 8.00 },
+            { name: 'Pasta (500g)', price: 12.00 }
+        ];
+
+        const ingredientsList = document.getElementById('ingredients-list');
+        let subtotal = 0;
+
+        ingredients.forEach(item => {
+            subtotal += item.price;
+            const li = document.createElement('li');
+            li.className = 'flex justify-between items-center text-gray-700';
+            li.innerHTML = `
+                <span>${item.name}</span>
+                <span class="font-mono">${item.price.toFixed(2)} kr.</span>
+            `;
+            ingredientsList.appendChild(li);
+        });
+
+        const vat = subtotal * 0.25;
+        const totalWithVat = subtotal + vat;
+
+        document.getElementById('subtotal-homemade').textContent = subtotal.toFixed(2);
+        document.getElementById('vat-homemade').textContent = vat.toFixed(2);
+        document.getElementById('total-homemade').textContent = totalWithVat.toFixed(2);
+        document.getElementById('total-no-vat').textContent = subtotal.toFixed(2);
+
+        // Toggle between homemade and processed
+        const toggle = document.getElementById('price-toggle');
+        const homemadeView = document.getElementById('meal-homemade');
+        const processedView = document.getElementById('meal-processed');
+
+        toggle.addEventListener('change', () => {
+            if (toggle.checked) {
+                homemadeView.classList.add('hidden');
+                processedView.classList.remove('hidden');
+            } else {
+                homemadeView.classList.remove('hidden');
+                processedView.classList.add('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

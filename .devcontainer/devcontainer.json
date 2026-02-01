@@ -1,0 +1,32 @@
+{
+	"name": "Ren og Fri",
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:0-20",
+	"postCreateCommand": "./.devcontainer/postCreateCommand.sh",
+	"mounts": [
+		"source=${localEnv:HOME},target=/localhome,type=bind,consistency=cached"
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"esbenp.prettier-vscode",
+				"bradlc.vscode-tailwindcss",
+				"DavidAnson.vscode-markdownlint",
+				"streetsidesoftware.code-spell-checker",
+				"github.vscode-github-actions"
+			]
+		}
+	},
+    "features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {}
+    },
+	"forwardPorts": [3000, 5173],
+	"remoteUser": "node",
+    "remoteEnv": {
+		"GH_TOKEN": "${localEnv:GH_TOKEN}",
+		"_GH_TOKEN": "${localEnv:_GH_TOKEN}",
+		"_GPG_KEY": "${localEnv:_GPG_KEY}",
+		"GPG_TTY": "${containerEnv:GPG_TTY}"
+    }
+}
