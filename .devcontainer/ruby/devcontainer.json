@@ -19,8 +19,8 @@
 				"streetsidesoftware.code-spell-checker",
 				"esbenp.prettier-vscode",
 				"github.vscode-github-actions",
-				"tamasfe.even-better-toml"
-
+				"tamasfe.even-better-toml",
+				"streetsidesoftware.code-spell-checker-danish"
 			]
         }
     },

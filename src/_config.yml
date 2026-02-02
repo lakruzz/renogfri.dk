@@ -1,0 +1,21 @@
+title: Ren & Fri
+description: Borgerforslag om 0-moms på rene råvarer.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://renogfri.dk" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
