@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0-Moms på Rene Råvarer | Borgerforslag</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Fresh & Organic -->
+    <!-- Primary: #F7F5F0 (Warm Off-white/Oatmeal) -->
+    <!-- Secondary: #2F855A (Fresh Leaf Green) -->
+    <!-- Accent: #C05621 (Warm Terra Cotta/Tomato) -->
+    <!-- Text: #2D3748 (Dark Slate) -->
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'organic-base': '#F7F5F0',
+                        'organic-green': '#2F855A',
+                        'organic-green-light': '#48BB78',
+                        'organic-red': '#C05621',
+                        'organic-dark': '#2D3748',
+                        'organic-card': '#FFFFFF',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F7F5F0;
+            color: #2D3748;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .interactive-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .interactive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #2F855A;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #2F855A;
+        }
+    </style>
+    
+    <!-- Application Structure Plan: 
+         1. Hero Section: Immediate hook - "Make the healthy choice the cheapest choice".
+         2. Concept Visualizer: Interactive tool to define "One Ingredient" vs "Ultra-Processed".
+         3. Price Simulator: A split-screen calculator showing the 25% savings on a home-cooked meal vs. processed.
+         4. Economic Logic: Charts showing the cost of the proposal vs. cost of obesity (Investment logic).
+         5. Implementation Flow: Step-by-step guide to GS1 integration and producer responsibility.
+         6. Vision/Social: The "Ren & Fri" recipe universe concept.
+         7. CTA: Link to citizen proposal logic.
+         
+         Rationale: The user needs to understand *why* this radical proposal works (simplicity) and *how* it benefits them directly (price). 
+    -->
+
+    <!-- Visualization & Content Choices:
+         - Price Simulator: JS-driven HTML list calculation. Goal: Show direct personal benefit ("Time-tax-deduction").
+         - Comparison Charts: Chart.js Bar/Pie charts. Goal: Visualize the macro-economic argument (17bn cost vs 10bn+ savings).
+         - NOVA Explainer: Interactive Accordion/Cards. Goal: Explain the scientific basis without dense text.
+         - NO SVG/Mermaid confirmed.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="font-sans antialiased leading-relaxed">
+
+    <!-- Navigation -->
+    <nav class="bg-organic-card shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-organic-green font-serif">Ren & Fri</span>
+                </div>
+                <div class="hidden sm:flex space-x-8 items-center">
+                    <a href="#concept" class="text-gray-600 hover:text-organic-green font-medium">Konceptet</a>
+                    <a href="#simulator" class="text-gray-600 hover:text-organic-green font-medium">Din Besparelse</a>
+                    <a href="#economics" class="text-gray-600 hover:text-organic-green font-medium">Økonomien</a>
+                    <a href="#implementation" class="text-gray-600 hover:text-organic-green font-medium">Implementering</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-organic-card border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-organic-dark mb-6 font-serif tracking-tight">
+                Gør det sunde valg <br>til det <span class="text-organic-green">billigste valg</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
+                Vi foreslår 0% moms på varer med én ingrediens. 
+                <br>En simpel, effektiv model til at bekæmpe livsstilssygdomme og belønne maddannelse.
+            </p>
+            <div class="mt-10 flex justify-center gap-4">
+                <a href="#simulator" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-organic-green hover:bg-organic-green-light shadow-lg transition-all">
+                    Beregn din besparelse
+                </a>
+                <a href="#concept" class="px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-all">
+                    Læs forslaget
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section 1: The Concept & NOVA -->
+    <section id="concept" class="py-16 bg-organic-base">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-organic-dark font-serif">Én-Ingrediens-Modellen</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Vi fjerner bureaukratiet ved at gøre det simpelt: Består varen af én ting? Så er den momsfri. 
+                    Forslaget bygger på den videnskabelige <strong>NOVA-klassificering</strong>, der skelner mellem råvarer og ultra-forarbejdet mad.
+                </p>
+            </div>
+
+            <!-- Interactive Concept Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 0% Moms Card -->
+                <div class="bg-white rounded-xl shadow-md p-8 border-l-8 border-organic-green interactive-card" onclick="highlightSection('nova1')">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold text-organic-green">0% Moms</h3>
+                            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide mt-1">Rene Råvarer (NOVA 1)</p>
+                        </div>
+                        <span class="text-4xl">🍎</span>
+                    </div>
+                    <ul class="mt-6 space-y-3 text-gray-600">
+                        <li class="flex items-center"><span class="mr-2 text-green-500">✓</span> Frisk frugt & grønt</li>
+                        <li class="flex items-center"><span class="mr-2 text-green-500">✓</span> Rent kød & fisk (fersk/frosset)</li>
+                        <li class="flex items-center"><span class="mr-2 text-green-500">✓</span> Æg & ren mælk</li>
+                        <li class="flex items-center"><span class="mr-2 text-green-500">✓</span> Mel & gryn (uden tilsætning)</li>
+                        <li class="flex items-center"><span class="mr-2 text-green-500">✓</span> Usaltet smør</li>
+                    </ul>
+                </div>
+
+                <!-- 25% Moms Card -->
+                <div class="bg-white rounded-xl shadow-md p-8 border-l-8 border-organic-red interactive-card" onclick="highlightSection('nova4')">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold text-organic-red">25% Moms</h3>
+                            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide mt-1">Forarbejdet Mad (NOVA 4)</p>
+                        </div>
+                        <span class="text-4xl">🍕</span>
+                    </div>
+                    <ul class="mt-6 space-y-3 text-gray-600">
+                        <li class="flex items-center"><span class="mr-2 text-red-500">✗</span> Færdigretter & Fastfood</li>
+                        <li class="flex items-center"><span class="mr-2 text-red-500">✗</span> Kiks, kage & chips</li>
+                        <li class="flex items-center"><span class="mr-2 text-red-500">✗</span> Saltet/marineret kød</li>
+                        <li class="flex items-center"><span class="mr-2 text-red-500">✗</span> Sødede drikkevarer</li>
+                        <li class="flex items-center"><span class="mr-2 text-red-500">✗</span> Produkter med 2+ ingredienser</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- "Is it Tax Free?" Tool -->
+            <div class="mt-12 bg-white rounded-lg shadow p-6 max-w-xl mx-auto text-center">
+                <h3 class="text-lg font-bold text-organic-dark mb-4">Moms-Tjekkeren</h3>
+                <p class="text-sm text-gray-600 mb-4">Skriv en vare for at se, om den ville være momsfri:</p>
+                <div class="flex gap-2">
+                    <input type="text" id="momsCheckInput" placeholder="F.eks. 'æble', 'saltet smør', 'chips'..." class="flex-1 border rounded-md px-4 py-2 focus:ring-2 focus:ring-organic-green outline-none">
+                    <button onclick="checkMoms()" class="bg-organic-dark text-white px-6 py-2 rounded-md font-medium hover:bg-gray-800">Tjek</button>
+                </div>
+                <div id="momsResult" class="mt-4 font-bold text-lg min-h-[1.75rem]"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Simulator (Tids-skatterabat) -->
+    <section id="simulator" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-organic-dark font-serif text-center">Din "Tids-Skatterabat"</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-4xl mx-auto text-center">
+                    Modellen belønner dig for at bruge tid i køkkenet. Se forskellen på at købe den "bekvemme" løsning versus den "rene" løsning til en klassisk familiemiddag: <strong>Kylling med rodfrugter.</strong>
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                
+                <!-- Scenario A: Processed -->
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                    <div class="flex items-center justify-between mb-4 border-b pb-4">
+                        <h3 class="text-xl font-bold text-gray-700">Det Bekvemme Valg</h3>
+                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full font-bold">25% MOMS</span>
+                    </div>
+                    <div class="space-y-4 text-sm text-gray-600">
+                        <div class="flex justify-between">
+                            <span>1 pk. Marineret Kyllingbryst (med vand/salt)</span>
+                            <span class="font-mono">55.00 kr.</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>1 pose Frosne Pomfritter (forstegt)</span>
+                            <span class="font-mono">28.00 kr.</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>1 gl. Færdig sovs</span>
+                            <span class="font-mono">22.00 kr.</span>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-4 border-t border-gray-300">
+                        <div class="flex justify-between text-lg font-bold text-gray-800">
+                            <span>Total Pris:</span>
+                            <span>105.00 kr.</span>
+                        </div>
+                        <p class="text-xs text-right text-gray-500 mt-1">Heraf moms: 21.00 kr.</p>
+                    </div>
+                </div>
+
+                <!-- Scenario B: Pure Ingredients -->
+                <div class="bg-green-50 rounded-xl p-6 border border-green-200 shadow-lg transform scale-105">
+                    <div class="flex items-center justify-between mb-4 border-b border-green-200 pb-4">
+                        <h3 class="text-xl font-bold text-organic-green">Det Rene Valg</h3>
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-bold">0% MOMS</span>
+                    </div>
+                    <div class="space-y-4 text-sm text-gray-700">
+                        <div class="flex justify-between">
+                            <span>1 pk. Fersk Kylling (ren)</span>
+                            <span class="font-mono">45.00 kr.</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>1 kg Kartofler (løs)</span>
+                            <span class="font-mono">12.00 kr.</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>1 pose Gulerødder</span>
+                            <span class="font-mono">8.00 kr.</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>1 brik Fløde (ren)</span>
+                            <span class="font-mono">10.00 kr.</span>
+                        </div>
+                        <!-- Discount Logic Visual -->
+                        <div class="mt-2 p-2 bg-green-100 rounded text-xs text-green-800 flex items-center">
+                            <span class="mr-2 text-lg">💡</span>
+                            Prisen før moms er den samme, men her betaler du 0% i skat.
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-green-200">
+                        <div class="flex justify-between text-lg font-bold text-organic-green">
+                            <span>Total Pris:</span>
+                            <span id="pureTotal">75.00 kr.</span>
+                        </div>
+                        <div class="mt-4 p-4 bg-white rounded-lg border border-green-300 text-center">
+                            <span class="block text-sm text-gray-500 uppercase tracking-wide">Du sparer</span>
+                            <span class="block text-3xl font-bold text-organic-green">30.00 kr.</span>
+                            <span class="block text-xs text-gray-400">På bare ét måltid!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <p class="text-gray-600 italic">"Prisen for at gøre det selv er nu en direkte gevinst. En tids-skatterabat til alle familier."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: The Economics -->
+    <section id="economics" class="py-16 bg-organic-base">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-organic-dark font-serif">Investering eller Udgift?</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Vi anerkender, at forslaget koster ca. 17-19 mia. kr. – langt over den nuværende ramme på 6 mia. kr. 
+                    Men vi skal se det som en investering i folkesundheden. Fedmeepidemien er dyrere end momsnedsættelsen.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                
+                <!-- Chart 1: Cost Comparison -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-bold text-gray-700 mb-4 text-center">Samfundsmæssig Balance (Mia. DKK)</h3>
+                    <div class="chart-container">
+                        <canvas id="costChart"></canvas>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-4 text-center">Kilde: Estimat baseret på Finansministeriets tal og sundhedsøkonomiske analyser af overvægt.</p>
+                </div>
+
+                <!-- Textual Context -->
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-organic-red flex items-center justify-center text-white font-bold">1</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">Den Skjulte Regning</h4>
+                            <p class="text-gray-600">Svær overvægt koster samfundet over 10 mia. kr. årligt i tabt produktivitet og direkte behandling. Hvis vi ikke knækker kurven, stiger denne udgift eksplosivt.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-organic-green flex items-center justify-center text-white font-bold">2</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">Incitament der Virker</h4>
+                            <p class="text-gray-600">En halvhjertet nedsættelse (f.eks. til 12% moms) er ikke nok til at ændre adfærd. Prisforskellen skal være så stor (25%), at forbrugeren ikke kan ignorere den.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">3</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">Det Lange Lys</h4>
+                            <p class="text-gray-600">Selvom statskassen mister momsindtægter nu, vil besparelser i sundhedsvæsenet og øget arbejdsudbud på sigt tjene investeringen hjem.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Implementation & Vision -->
+    <section id="implementation" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-organic-dark font-serif">Ingen Bureaukrati, Mere Maddannelse</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Implementation Process -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-6">Sådan virker det i praksis</h3>
+                    <div class="relative pl-8 border-l-2 border-organic-green space-y-8">
+                        <div class="relative">
+                            <span class="absolute -left-11 bg-organic-green text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
+                            <h4 class="font-bold text-gray-700">Producenten Deklarerer</h4>
+                            <p class="text-sm text-gray-600">Producenten registrerer varen i GS1-databasen. Er der kun én ingrediens? Ja/Nej.</p>
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-11 bg-organic-green text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
+                            <h4 class="font-bold text-gray-700">Kassen Beregner</h4>
+                            <p class="text-sm text-gray-600">Supermarkedets kassesystem læser koden automatisk. 0% moms fratrækkes direkte ved scanning.</p>
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-11 bg-organic-green text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span>
+                            <h4 class="font-bold text-gray-700">Stikprøvekontrol</h4>
+                            <p class="text-sm text-gray-600">Skattestyrelsen tjekker stikprøver. Snyd med ingredienser straffes hårdt (som skattesvig).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vision: Ren & Fri -->
+                <div class="bg-yellow-50 rounded-xl p-8 border border-yellow-200">
+                    <h3 class="text-xl font-bold text-yellow-800 mb-4">Visionen: Ren & Fri</h3>
+                    <p class="text-gray-700 mb-4">
+                        Vi møder ofte argumentet: <em>"Fattige har ikke tid til at lave mad."</em>
+                        Vi mener, det handler om <strong>færdigheder</strong>, ikke tid.
+                    </p>
+                    <p class="text-gray-700 mb-6">
+                        Derfor lancerer vi sammen med loven en digital platform og kampagne på sociale medier. 
+                        Tusindvis af gratis opskrifter kurateret til kun at bruge <strong>0-moms varer</strong>.
+                    </p>
+                    <div class="bg-white p-4 rounded shadow-sm text-center">
+                        <p class="text-sm font-bold text-gray-500 uppercase">Eksempel</p>
+                        <p class="text-lg font-bold text-gray-800 mt-1">"Tomatsuppe på 15 min"</p>
+                        <p class="text-xs text-gray-500 mt-2">Tomater • Løg • Hvidløg • Fløde</p>
+                        <div class="mt-3 inline-block bg-organic-green text-white text-xs px-2 py-1 rounded">100% Momsfri</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / CTA -->
+    <footer class="bg-organic-dark text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-serif font-bold mb-6">Støt Forslaget</h2>
+            <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-8">
+                Dette er et borgerforslag renset for partipolitik. Det handler om sund fornuft og vores børns fremtid.
+                Lad os gøre Danmark til foregangsland for ren mad.
+            </p>
+            <div class="flex justify-center gap-4">
+                <button class="bg-organic-green hover:bg-organic-green-light text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105 shadow-lg">
+                    Skriv under på Borgerforslag.dk
+                </button>
+            </div>
+            <p class="mt-8 text-sm text-gray-500">
+                Baseret på data fra Arla Fonden, Finansministeriet og international ernæringsforskning (NOVA). <br>
+                © 2026 Bevægelsen Ren & Fri
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- State Management ---
+        const appState = {
+            momsDatabase: {
+                // 0% Moms (One Ingredient)
+                'æble': true, 'pære': true, 'banan': true, 'kartoffel': true, 'gulerod': true, 'løg': true,
+                'kylling': true, 'oksekød': true, 'fisk': true, 'laks': true, 'torsk': true,
+                'æg': true, 'mælk': true, 'fløde': true, 'smør': true, 'usaltet smør': true,
+                'mel': true, 'havregryn': true, 'ris': true, 'bønner': true, 'linser': true, 'vand': true,
+                // 25% Moms (Processed/Multi)
+                'saltet smør': false, 'kiks': false, 'chips': false, 'sodavand': false, 'cola': false,
+                'pølser': false, 'spegepølse': false, 'kage': false, 'brød': false, 'rugbrød': false,
+                'pizza': false, 'færdigret': false, 'lasagne': false, 'slik': false, 'chokolade': false,
+                'yoghurt med frugt': false, 'frugtyoghurt': false, 'marineret kylling': false
+            }
+        };
+
+        // --- Interaction: Check Moms ---
+        function checkMoms() {
+            const input = document.getElementById('momsCheckInput').value.toLowerCase().trim();
+            const resultDiv = document.getElementById('momsResult');
+            
+            if (!input) {
+                resultDiv.innerHTML = '';
+                return;
+            }
+
+            // Simple logic check
+            let isMomsFri = appState.momsDatabase[input];
+            
+            // Fallback heuristics if not in DB
+            if (isMomsFri === undefined) {
+                if (input.includes('kage') || input.includes('ret') || input.includes('mix') || input.includes('sodavand')) {
+                    isMomsFri = false;
+                } else if (input.includes('frugt') || input.includes('grønt') || input.includes('fersk')) {
+                    isMomsFri = true;
+                } else {
+                    resultDiv.innerHTML = `<span class="text-gray-500">Varen findes ikke i vores demo-database. Men spørg dig selv: Har den én ingrediens?</span>`;
+                    return;
+                }
+            }
+
+            if (isMomsFri) {
+                resultDiv.innerHTML = `<span class="text-organic-green text-2xl">✓ 0% MOMS</span> <span class="text-sm block text-gray-600">Dette er en ren råvare (1 ingrediens).</span>`;
+            } else {
+                resultDiv.innerHTML = `<span class="text-organic-red text-2xl">✕ 25% MOMS</span> <span class="text-sm block text-gray-600">Dette er forarbejdet eller har tilsætning.</span>`;
+            }
+        }
+        
+        // --- Interaction: Keyboard support for check ---
+        document.getElementById('momsCheckInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkMoms();
+            }
+        });
+
+        // --- Charts Initialization ---
+        document.addEventListener('DOMContentLoaded', function() {
+            initCostChart();
+        });
+
+        function initCostChart() {
+            const ctx = document.getElementById('costChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Nuværende Moms-Ramme', 'Overvægtens Pris (Årligt)', 'Pris for 0-Moms Forslag'],
+                    datasets: [{
+                        label: 'Milliarder DKK',
+                        data: [6, 12, 18], // Data approximations from text
+                        backgroundColor: [
+                            '#CBD5E0', // Grey for Current budget
+                            '#C05621', // Red for Cost of Obesity (Bad)
+                            '#2F855A'  // Green for Proposal (Investment)
+                        ],
+                        borderWidth: 0,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.raw + ' Milliarder kr.';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Milliarder DKK'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- Smooth Scroll Logic ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+    </script>

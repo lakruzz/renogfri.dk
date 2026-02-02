@@ -103,3 +103,6 @@ temp/
 
 # macOS
 .DS_Store
+
+## Takt
+.tt_cache
