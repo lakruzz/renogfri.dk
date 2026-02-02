@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Project custom styles (extracted from original index) */
+body {
+  background-color: #F7F5F0;
+  color: #2D3748;
+}
+.chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 300px;
+  max-height: 400px;
+}
+@media (min-width: 768px) {
+  .chart-container { height: 400px; }
+}
+.interactive-card { transition: transform .2s ease-in-out, box-shadow .2s ease-in-out; cursor: pointer; }
+.interactive-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05); }
+.toggle-checkbox:checked { right: 0; border-color: #2F855A; }
+.toggle-checkbox:checked + .toggle-label { background-color: #2F855A; }
