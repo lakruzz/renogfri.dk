@@ -7,19 +7,17 @@ export function initCostChart(canvasId = 'costChart') {
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Årlige Udgifter til Overvægt', 'Tabt Moms-provenu (Estimat)'],
+      labels: ['Nuværende Moms-Ramme', 'Overvægtens Pris (Årligt)', 'Pris for 0-Moms Forslag'],
       datasets: [{
         label: 'Milliarder DKK',
-        data: [17, 11],
+        data: [6, 12, 18], // Data approximations from was.index.html
         backgroundColor: [
-          '#C05621', // accent-terra-cotta
-          '#2F855A'  // organic-green
+          '#CBD5E0', // Grey for Current budget
+          '#C05621', // Red for Cost of Obesity (Bad)
+          '#2F855A'  // Green for Proposal (Investment)
         ],
-        borderColor: [
-          '#A0401A',
-          '#246B4A'
-        ],
-        borderWidth: 1
+        borderWidth: 0,
+        borderRadius: 4
       }]
     },
     options: {
@@ -29,22 +27,20 @@ export function initCostChart(canvasId = 'costChart') {
         legend: {
           display: false
         },
-        title: {
-          display: true,
-          text: 'Sammenligning af Omkostninger (i mia. DKK)',
-          font: {
-            size: 16,
-            family: "'Merriweather', serif"
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.raw + ' Milliarder kr.';
+            }
           }
         }
       },
       scales: {
         y: {
           beginAtZero: true,
-          ticks: {
-            callback: function(value) {
-              return value + ' mia.';
-            }
+          title: {
+            display: true,
+            text: 'Milliarder DKK'
           }
         }
       }
