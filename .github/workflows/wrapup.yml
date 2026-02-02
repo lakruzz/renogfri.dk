@@ -1,0 +1,75 @@
+
+name: Wrapup
+# This workflow is triggered on push to branches that begins with a number (issue-branches)
+# It's designed to support the wrapup process in thetechcollective/gh-tt GitHub CLI extension
+on:
+  workflow_dispatch:
+
+  push:
+    branches: 
+      - '[0-9]*'
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+        
+  mark-pending:
+    name: Pending
+    permissions:
+      statuses: write
+      contents: read
+    uses: lakruzz/workflows/.github/workflows/mark_pending.yml@experimental
+    with:
+      statuses: |
+        cspell:check
+        markdown:lint
+        jekyll:build
+        proofer:check_external
+
+
+  cspell-check:
+    name: Check
+    needs: mark-pending
+    permissions:
+      statuses: write
+      contents: read
+    uses: lakruzz/workflows/.github/workflows/cspell_check.yml@experimental
+    with:
+      context: cspell:check
+      config_file: cspell.json 
+
+  markdown-linter:
+    name: Linting
+    needs: mark-pending
+    permissions:
+      statuses: write
+      contents: read
+    uses: lakruzz/workflows/.github/workflows/markdown_linter.yml@experimental
+    with:
+      context: markdown:lint
+      config_file: .markdownlint-cli2.jsonc
+
+  prepare-image:
+    name: Fetch or Build
+    permissions:
+      packages: write
+    uses: lakruzz/workflows/.github/workflows/docker_with_cache.yml@experimental
+    with:
+      dockerfile: dockerfile
+      hash-files: Gemfile.lock
+      image-tag: docker-workflow-image
+
+  rake-tasks:
+    name: Multiple
+    needs: [mark-pending, prepare-image]
+    permissions:
+      statuses: write
+      contents: read
+      packages: read
+      actions: write
+    uses: lakruzz/workflows/.github/workflows/rake_task.yml@experimental
+    with:
+      rake-task: jekyll:build proofer:check_external
+      image-fqdn: ${{ needs.prepare-image.outputs.image-fqdn }}

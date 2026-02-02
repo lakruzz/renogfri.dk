@@ -1,0 +1,83 @@
+
+
+name: Ready
+# This workflow is triggered by 'ready' branches 
+
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - 'ready/*'
+      
+jobs:
+
+  inherit-statuses:
+    name: Inherit
+    permissions:
+      statuses: write
+      contents: read
+    uses: lakruzz/workflows/.github/workflows/inherit_statuses.yml@experimental  
+
+  mark-pending:
+    name: Pending
+    needs: inherit-statuses
+    permissions:
+      statuses: write
+      contents: read
+    uses: lakruzz/workflows/.github/workflows/mark_pending.yml@experimental
+    with:
+      statuses: |
+        jekyll:build
+
+  prepare-image:
+    name: Fetch or Build
+    permissions:
+      packages: write
+    uses: lakruzz/workflows/.github/workflows/docker_with_cache.yml@experimental
+    with:
+      dockerfile: dockerfile
+      hash-files: Gemfile.lock
+      image-tag: docker-workflow-image
+
+  jekyll-build:
+    name: Jekyll Build
+    needs: [prepare-image, mark-pending]
+    permissions:
+      statuses: write
+      contents: read
+      packages: read
+      actions: write
+    uses: lakruzz/workflows/.github/workflows/rake_task.yml@experimental
+    secrets:
+      token: ${{ secrets.READY_PUSHER }}
+    with:
+      rake-task: jekyll:build
+      image-fqdn: ${{ needs.prepare-image.outputs.image-fqdn }}
+      upload-artifact: true        
+          
+  
+  fast-forward-merge:
+    name: Merge
+    needs:
+      - jekyll-build
+    permissions:
+      contents: write
+    secrets:
+      token: ${{ secrets.READY_PUSHER }}
+    uses: lakruzz/workflows/.github/workflows/fast_forward.yml@experimental
+    with:
+      target_branch: main #default is main
+      user_name: "Ready Pusher" #required 
+      user_email: "ready-pusher@devopsdays.dk" # required
+
+  close_issue:
+    needs: fast-forward-merge
+    permissions:
+      issues: write
+      contents: write
+    uses: lakruzz/workflows/.github/workflows/close_issue.yml@experimental
+    with:
+      user_name: "Ready Pusher"
+      user_email: "ready-pusher@devopsdays.dk"
+      delete_issue_branch: true # default is true
+      delete_ready_branch: true # default is true
