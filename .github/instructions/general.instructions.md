@@ -12,7 +12,11 @@ This file contains operational instructions for how AI agents should behave with
 
 ## Issue-related tasks
 
-When asked to annotate issue summaries or perform other issue-related tasks, ALWAYS extract the issue number directly from the terminal prompt (the number before the hyphen in the branch name shown in parentheses). DO NOT run additional git commands like `git branch --show-current` to determine this information.
+When asked to annotate issue summaries or perform other issue-related tasks:
+
+- **For issue branches** (format: `123-feature-name`): Extract the issue number directly from the terminal prompt (the number before the first hyphen in the branch name shown in parentheses). DO NOT run additional git commands like `git branch --show-current` to determine this information.
+
+- **For copilot/ branches** (format: `copilot/branch-name`): These are working branches created for GitHub Copilot agents. They do NOT contain embedded issue numbers. If you need to reference an issue while on a `copilot/*` branch, the issue number must be provided explicitly in the task context or obtained through other means (not from the branch name).
 
 ## Suggest new issues
 
