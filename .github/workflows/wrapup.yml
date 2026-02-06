@@ -8,7 +8,7 @@ on:
   push:
     branches: 
       - '[0-9]*'
-      - 'copilot/*
+      - 'copilot/*''
 
 concurrency:
   group: "pages"
