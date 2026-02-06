@@ -1,39 +1,6 @@
 <!DOCTYPE html>
 <html lang="da">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title | default: "Ren & Fri" }} | Borgerforslag</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet">
-    
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'organic-base': '#F7F5F0',
-                        'organic-green': '#2F855A',
-                        'organic-green-light': '#48BB78',
-                        'organic-red': '#C05621',
-                        'organic-blue': '#4d69aa',
-                        'organic-dark': '#2D3748',
-                        'organic-card': '#FFFFFF',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Merriweather', 'serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
-</head>
+{% include head.html %}
 <body class="font-sans antialiased leading-relaxed">
 
     {% include navigation.html %}
