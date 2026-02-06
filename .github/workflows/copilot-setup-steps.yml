@@ -12,22 +12,34 @@ on:
       - .github/workflows/copilot-setup-steps.yml
 
 jobs:
+  prepare-image:
+    name: Fetch or Build Image
+    permissions:
+      packages: write
+      contents: read
+    uses: lakruzz/workflows/.github/workflows/docker_with_cache.yml@experimental
+    with:
+      dockerfile: dockerfile
+      hash-files: Gemfile.lock
+      image-tag: docker-workflow-image
+
   # The job MUST be called `copilot-setup-steps` or it will not be picked up by Copilot.
   copilot-setup-steps:
+    needs: prepare-image
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
     
-    # Use the same Ruby Docker image as the project's Dockerfile
-    # This ensures consistent environment with ImageMagick support for RMagick gem
+    # Use the pre-built image from the prepare-image job
     container:
-      image: ruby:3.3.0-bookworm
+      image: ${{ needs.prepare-image.outputs.image-fqdn }}
 
     # Set the permissions to the lowest permissions possible needed for your steps.
     # Copilot will be given its own token for its operations.
     permissions:
       contents: read
+      packages: read # Required to pull the image from GHCR
 
     steps:
       - name: Checkout code
@@ -37,13 +49,12 @@ jobs:
       - name: Configure git safe directory
         run: git config --global --add safe.directory /__w/renogfri.dk/renogfri.dk
 
-      # Install Ruby gems with bundler (Ruby 3.3.0 is already in the container)
-      - name: Install Ruby gems
-        run: |
-          bundle config set --local frozen true
-          bundle install
+      # Configure Bundler to use the global gem path from the Docker image
+      - name: Configure Bundler
+        run: bundle config set --global path "/usr/local/bundle"
 
       # Install Node.js for npm packages (cspell, markdownlint-cli2)
+      # These might already be in your Docker image, but it's safe to have them here.
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:

@@ -7,6 +7,9 @@ LABEL maintainer="Lakruzz <lars@lakruzz.com>"
 WORKDIR /app
 EXPOSE 4000
 
+# Set bash as the default shell for compatibility with GitHub Copilot agent
+RUN ln -sf /bin/bash /bin/sh
+
 # Liquid must run in UTF-8 env to support BOM characters
 
 RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg && \
