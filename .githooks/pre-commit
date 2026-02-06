@@ -9,7 +9,7 @@ PASS=TRUE
 # Enable/disable specific checks
 RUN_RUFF="FALSE"
 RUN_PYTEST="FALSE"
-RUN_CSPELL="FALSE"
+RUN_CSPELL="TRUE"
 RUN_MARKDOWNLINT="TRUE"
 RUN_RAKE_HTMLPROOFER="TRUE"
 RUN_RAKE_BUILD="TRUE"
@@ -50,7 +50,7 @@ fi
 # Cspell
 if [ "$RUN_CSPELL" == "TRUE" ]; then
     printf "   ⏳ CSpell check\r"
-    CSPELL_OUT=$( cspell lint . --no-progress 2>&1)
+    CSPELL_OUT=$( cspell lint --no-progress 2>&1)
 
     if [ $? -eq 0 ]; then
         echo "   ✅ CSpell check"

@@ -1,0 +1,23 @@
+<!-- "Is it Tax Free?" Tool -->
+<div class="mt-12 bg-white rounded-lg shadow p-6 max-w-xl mx-auto text-center">
+  <h3 class="text-lg font-bold text-organic-dark mb-4">Moms-Tjekkeren</h3>
+  <p class="text-sm text-gray-600 mb-4">
+    Skriv en vare for at se, om den ville være momsfri:
+  </p>
+  <div class="flex gap-2">
+    <input
+      type="text"
+      id="momsCheckInput"
+      placeholder="F.eks. 'æble', 'saltet smør', 'chips'..."
+      class="flex-1 border rounded-md px-4 py-2 focus:ring-2 focus:ring-organic-green outline-none"
+    />
+    <button
+      onclick="checkMoms()"
+      class="bg-organic-dark text-white px-6 py-2 rounded-md font-medium hover:bg-gray-800"
+    >
+      Tjek
+    </button>
+  </div>
+  <div id="momsResult" class="mt-4 font-bold text-lg min-h-[1.75rem]"></div>
+</div>
+<script src="/assets/js/moms-tjekker.js"></script>

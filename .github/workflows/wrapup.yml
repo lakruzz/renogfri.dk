@@ -26,18 +26,18 @@ jobs:
         markdown:lint
         jekyll:build
         proofer:check_external
-      # cspell:check
+        cspell:check
 
-  #cspell-check:
-  #  name: Check
-  #  needs: mark-pending
-  #  permissions:
-  #    statuses: write
-  #    contents: read
-  #  uses: lakruzz/workflows/.github/workflows/cspell_check.yml@experimental
-  #  with:
-  #    context: cspell:check
-  #    config_file: cspell.json 
+  cspell-check:
+    name: Check
+    needs: mark-pending
+    permissions:
+      statuses: write
+      contents: read
+    uses: lakruzz/workflows/.github/workflows/cspell_check.yml@experimental
+    with:
+      context: cspell:check
+      config_file: .cspell.json 
 
   markdown-linter:
     name: Linting
