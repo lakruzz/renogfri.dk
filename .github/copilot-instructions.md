@@ -15,7 +15,7 @@ This document provides general instructions for working on a Jekyll-based projec
 
 When setting up the development environment, GitHub Copilot agents should reference the following resources:
 
-- **Primary reference**: `.github/copilot-setup-steps.yml` - Contains detailed environment setup instructions
+- **Primary reference**: `.github/workflows/copilot-setup-steps.yml` - Executable GitHub Actions workflow that sets up the environment before Copilot starts working
 - **Container definition**: `dockerfile` - Defines the Ruby 3.3.0 base image with all system dependencies
 - **DevContainer config**: `.devcontainer/ruby/devcontainer.json` - VS Code development container configuration
 
