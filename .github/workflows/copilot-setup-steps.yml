@@ -25,6 +25,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Configure git to prevent dubious ownership errors
+      - name: Configure git safe directory
+        run: git config --global --add safe.directory /home/runner/work/renogfri.dk/renogfri.dk
+
       # Install Ruby and Bundler for Jekyll
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -46,3 +50,7 @@ jobs:
       # Configure git hooks path
       - name: Configure Git hooks
         run: git config core.hooksPath .githooks
+
+      # Verify the setup by running the pre-commit hook
+      - name: Test pre-commit hook
+        run: .githooks/pre-commit
