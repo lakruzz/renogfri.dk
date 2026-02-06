@@ -3,7 +3,8 @@
   "globs": [
     "**/*.md",
     "!node_modules/**",
-    "!**/temp/**"
+    "!**/temp/**",
+    "!.bundle/**"
   ],
   "config": {
     "MD033": false,
