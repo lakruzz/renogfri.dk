@@ -43,13 +43,18 @@ ruby_dependencies:
   description: Install all gems specified in Gemfile (Jekyll, html-proofer, rake, etc.)
   note: The Gemfile.lock ensures consistent versions
 
-# Node.js Dependencies
+# Node.js Dependencies (CRITICAL for pre-commit hook)
+# These packages are required by .githooks/pre-commit script
+# They are also installed via the devcontainer configuration at:
+# .devcontainer/ruby/devcontainer.json (features.npm-packages)
 node_dependencies:
   packages:
-    - cspell
-    - markdownlint-cli2
-    - "@cspell/dict-da-dk"
+    - cspell                    # Required by pre-commit (RUN_CSPELL=TRUE)
+    - markdownlint-cli2         # Required by pre-commit (RUN_MARKDOWNLINT=TRUE)
+    - "@cspell/dict-da-dk"      # Danish dictionary for cspell
   install_command: npm install -g cspell markdownlint-cli2 @cspell/dict-da-dk
+  critical: true
+  note: Without these packages, .githooks/pre-commit will fail
 
 # Setup Steps (in order)
 setup_steps:
@@ -68,9 +73,10 @@ setup_steps:
   - step: 3
     name: Install Node.js Tools
     command: npm install -g cspell markdownlint-cli2 @cspell/dict-da-dk
-    description: Install linting tools for markdown and spelling
+    description: Install linting tools for markdown and spelling (REQUIRED for pre-commit hook)
     critical: true
-    note: These are required for the pre-commit hook
+    note: The .githooks/pre-commit script calls 'cspell' and 'markdownlint-cli2' directly. These must be in PATH.
+    reference: .devcontainer/ruby/devcontainer.json line 31-33
 
   - step: 4
     name: Configure Git Hooks
@@ -84,6 +90,10 @@ validation:
   description: Run all pre-commit checks to validate the environment
   success_criteria: Exit code 0
   note: This runs Jekyll build, HTML proofer, cspell, and markdownlint checks
+  prerequisites:
+    - npm packages must be installed (cspell, markdownlint-cli2)
+    - Ruby gems must be installed (bundle install)
+    - Git hooks must be configured (git config core.hooksPath .githooks)
 
 # Build Commands
 build:
