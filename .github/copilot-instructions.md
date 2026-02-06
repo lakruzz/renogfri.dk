@@ -11,14 +11,64 @@ This document provides general instructions for working on a Jekyll-based projec
 - **Task Runner**: **Rake** is used to automate build and development tasks. See the `Rakefile` for details.
 - **Containerization**: A `dockerfile` is provided to create a consistent development environment with Ruby, Bundler, and the GitHub CLI.
 
+## Environment Setup for Copilot Agents
+
+When setting up the development environment, GitHub Copilot agents should reference the following resources:
+
+- **Primary reference**: `.github/workflows/copilot-setup-steps.yml` - Executable GitHub Actions workflow that sets up the environment before Copilot starts working
+- **Container definition**: `dockerfile` - Defines the Ruby 3.3.0 base image with all system dependencies
+- **DevContainer config**: `.devcontainer/ruby/devcontainer.json` - VS Code development container configuration
+
+### Essential Setup Steps
+
+1. **Ruby dependencies**: Run `bundle install` to install Jekyll and all gems from Gemfile
+2. **Node.js tools**: Install `cspell`, `markdownlint-cli2`, and `@cspell/dict-da-dk` (required for pre-commit checks)
+3. **Git hooks**: Configure git to use hooks from `.githooks` directory
+4. **Validation**: Run `.githooks/pre-commit` to verify the environment is correctly configured
+
+### Success Criteria
+
+Before completing any work, the `.githooks/pre-commit` script must execute successfully with exit code 0. This script validates:
+
+- Spelling (cspell)
+- Markdown formatting (markdownlint-cli2)
+- Jekyll build (bundle exec rake jekyll:build)
+- HTML link validation (bundle exec rake proofer:check_external)
+
+If the pre-commit hook fails, the issue is not resolved.
+
 ## Version Control & Issue Management
 
 We do not use pull requests. Instead, we use the GitHub CLI extension [gh-tt](https://github.com/thetechcollective/gh-tt) to manage issues and branches.
+
+### Branch Types and Naming
+
+- **Issue branches** (e.g., `123-my-feature`): Created by developers with `gh tt workon -i ISSUE`. The issue number is prefixed to the branch name.
+- **Copilot branches** (e.g., `copilot/update-feature`): Created for GitHub Copilot agents to work on. These branches do NOT follow the issue number prefix pattern.
+
+### Extracting Issue Numbers from Branches
+
+- **For issue branches**: The issue number is the numeric prefix before the first hyphen (e.g., `123-my-feature` → issue #123)
+- **For copilot/ branches**: DO NOT attempt to extract an issue number from the branch name. These are working branches without embedded issue numbers.
+
+When working on a `copilot/*` branch and you need to reference the related issue, it should be provided explicitly in the task context or retrieved through other means (e.g., branch metadata, issue assignment).
+
+### Workflow Commands
 
 - `gh tt workon [-i ISSUE | -t TITLE]`: Creates and switches to a new issue branch (e.g., `123-my-feature`).
 - `gh tt wrapup [message]`: Stages all changes, commits them, and pushes the branch. This triggers the pre-commit hook locally and the 'wrapup' workflow when reaching GitHub.
 - `gh tt deliver`: Squashes all branch commits into one commit on a branch named after the issue and prefixed with `ready/` It triggers the 'ready' workflow and prepares it for fast-forwarding into `main`. When a commit hits main it is automatically deployed by the 'deploy' workflow.
 - `git sweep`: An alias defined in the .gitconfig file that fetches and prunes remote branches, then deletes any local branches that have been merged into `main`. It prepares your local repo for new work.
+
+### Copilot Agent Workflow
+
+When GitHub Copilot agents are assigned to work on an issue:
+
+1. Copilot works on a `copilot/*` branch (created automatically)
+2. Copilot makes changes and validates them against the pre-commit hook
+3. When complete, a developer creates the proper issue branch: `gh tt workon -i <issue-number>`
+4. Developer then integrates Copilot's work: `git reset --hard copilot/<branch-name>`
+5. Developer proceeds with normal workflow (`gh tt wrapup`, `gh tt deliver`)
 
 ## Developer Workflow
 

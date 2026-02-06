@@ -1,0 +1,60 @@
+name: "Copilot Setup Steps"
+
+# Automatically run the setup steps when they are changed to allow for easy validation, and
+# allow manual testing through the repository's "Actions" tab
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  # The job MUST be called `copilot-setup-steps` or it will not be picked up by Copilot.
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+    
+    # Use the same Ruby Docker image as the project's Dockerfile
+    # This ensures consistent environment with ImageMagick support for RMagick gem
+    container:
+      image: ruby:3.3.0-bookworm
+
+    # Set the permissions to the lowest permissions possible needed for your steps.
+    # Copilot will be given its own token for its operations.
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Configure git to prevent dubious ownership errors
+      - name: Configure git safe directory
+        run: git config --global --add safe.directory /__w/renogfri.dk/renogfri.dk
+
+      # Install Ruby gems with bundler (Ruby 3.3.0 is already in the container)
+      - name: Install Ruby gems
+        run: |
+          bundle config set --local frozen true
+          bundle install
+
+      # Install Node.js for npm packages (cspell, markdownlint-cli2)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Install npm packages required by .githooks/pre-commit
+      # These are CRITICAL for validation to pass
+      - name: Install Node.js linting tools
+        run: npm install -g cspell markdownlint-cli2 @cspell/dict-da-dk
+
+      # Configure git hooks path
+      - name: Configure Git hooks
+        run: git config core.hooksPath .githooks
+
+      # Verify the setup by running the pre-commit hook
+      - name: Test pre-commit hook
+        run: .githooks/pre-commit
