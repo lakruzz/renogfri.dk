@@ -15,6 +15,11 @@ jobs:
   # The job MUST be called `copilot-setup-steps` or it will not be picked up by Copilot.
   copilot-setup-steps:
     runs-on: ubuntu-latest
+    
+    # Use the same Ruby Docker image as the project's Dockerfile
+    # This ensures consistent environment with ImageMagick support for RMagick gem
+    container:
+      image: ruby:3.3.0-bookworm
 
     # Set the permissions to the lowest permissions possible needed for your steps.
     # Copilot will be given its own token for its operations.
@@ -27,14 +32,13 @@ jobs:
 
       # Configure git to prevent dubious ownership errors
       - name: Configure git safe directory
-        run: git config --global --add safe.directory /home/runner/work/renogfri.dk/renogfri.dk
+        run: git config --global --add safe.directory /__w/renogfri.dk/renogfri.dk
 
-      # Install Ruby and Bundler for Jekyll
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.3.0'
-          bundler-cache: true
+      # Install Ruby gems with bundler (Ruby 3.3.0 is already in the container)
+      - name: Install Ruby gems
+        run: |
+          bundle config set --local frozen true
+          bundle install
 
       # Install Node.js for npm packages (cspell, markdownlint-cli2)
       - name: Set up Node.js
