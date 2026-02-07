@@ -1,0 +1,136 @@
+name: Ny Støtte
+description: Tilmeld din organisation som støtte til "Ren & Fri" forslaget
+title: "[STØTTE]: "
+labels: ["supporter", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tak for din interesse i at støtte "Ren & Fri" forslaget om 0-moms på rene råvarer! 
+        Udfyld venligst nedenstående oplysninger, så vi kan oprette din profil på vores hjemmeside.
+
+  - type: input
+    id: name
+    attributes:
+      label: Organisationens navn
+      description: Det fulde navn på din organisation
+      placeholder: f.eks. "Grøn Virksomhed A/S" eller "Dansk Sundheds NGO"
+    validations:
+      required: true
+
+  - type: input
+    id: tagline
+    attributes:
+      label: Tagline
+      description: En kort beskrivelse af din organisation (max 80 tegn)
+      placeholder: f.eks. "Kæmper for en sundere fremtid"
+    validations:
+      required: true
+
+  - type: textarea
+    id: excerpt
+    attributes:
+      label: Om organisationen
+      description: En længere beskrivelse af din organisation og hvorfor I støtter forslaget (2-4 afsnit)
+      placeholder: |
+        Fortæl os om jeres organisation og hvorfor I støtter forslaget om 0-moms på rene råvarer.
+        
+        Hvad er jeres mission og værdier?
+        Hvordan passer dette forslag ind i jeres arbejde?
+    validations:
+      required: true
+
+  - type: input
+    id: website
+    attributes:
+      label: Hjemmeside (påkrævet)
+      description: URL til jeres hjemmeside
+      placeholder: https://www.jeres-organisation.dk
+    validations:
+      required: true
+
+  - type: input
+    id: linkedin
+    attributes:
+      label: LinkedIn (valgfrit)
+      description: URL til jeres LinkedIn profil
+      placeholder: https://linkedin.com/company/jeres-organisation
+
+  - type: input
+    id: facebook
+    attributes:
+      label: Facebook (valgfrit)
+      description: URL til jeres Facebook side
+      placeholder: https://facebook.com/jeresorganisation
+
+  - type: input
+    id: instagram
+    attributes:
+      label: Instagram (valgfrit)
+      description: URL til jeres Instagram profil
+      placeholder: https://instagram.com/jeresorganisation
+
+  - type: input
+    id: x
+    attributes:
+      label: X/Twitter (valgfrit)
+      description: URL til jeres X/Twitter profil
+      placeholder: https://x.com/jeresorganisation
+
+  - type: input
+    id: contact_name
+    attributes:
+      label: Kontaktperson - Navn (valgfrit)
+      description: Navn på kontaktperson for organisationen
+      placeholder: f.eks. "Anders Andersen"
+
+  - type: input
+    id: contact_email
+    attributes:
+      label: Kontaktperson - Email (valgfrit)
+      description: Email til kontaktperson
+      placeholder: f.eks. "anders@jeres-organisation.dk"
+
+  - type: input
+    id: contact_phone
+    attributes:
+      label: Kontaktperson - Telefon (valgfrit)
+      description: Telefonnummer til kontaktperson
+      placeholder: f.eks. "+45 12 34 56 78"
+
+  - type: dropdown
+    id: contact_visible
+    attributes:
+      label: Vis kontaktoplysninger på hjemmesiden?
+      description: Skal kontaktoplysningerne vises offentligt på supporter-siden?
+      options:
+        - "Nej"
+        - "Ja"
+      default: 0
+
+  - type: textarea
+    id: logo
+    attributes:
+      label: Logo
+      description: |
+        Upload eller vedhæft jeres logo som en fil. 
+        Logoet bør være i høj opløsning (PNG, SVG eller JPG format).
+        Ideelt set kvadratisk format (mindst 400x400 pixels).
+        
+        Du kan vedhæfte filen ved at trække den ind i tekstfeltet eller ved at klikke på området.
+      placeholder: Træk og slip din logofil her
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Bekræftelse
+      description: Ved at indsende denne formular bekræfter du følgende
+      options:
+        - label: Jeg repræsenterer organisationen og har bemyndigelse til at tilmelde den som støtte
+          required: true
+        - label: Jeg accepterer at organisationens navn, logo og beskrivelse offentliggøres på renogfri.dk
+          required: true
+        - label: Jeg har læst og forstået forslaget på borgerforslag.dk
+          required: true
