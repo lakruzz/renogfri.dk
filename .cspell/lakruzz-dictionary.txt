@@ -1,4 +1,5 @@
 # Custom Dictionary Words
+agentic
 Andon
 Andreessen
 Asser
@@ -49,6 +50,7 @@ København
 kōhai
 Kohsuke
 kruse
+lakruzz
 Lakruzz
 Larusso
 Marmorkirken

@@ -4,7 +4,8 @@
     "**/*.md",
     "!node_modules/**",
     "!**/temp/**",
-    "!.bundle/**"
+    "!.bundle/**",
+    "!vendor/**"
   ],
   "config": {
     "MD033": false,

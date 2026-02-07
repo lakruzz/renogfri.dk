@@ -9,7 +9,7 @@ gem "wdm", "~> 0.1.0" if Gem.win_platform?
 gem "webrick"
 gem "faraday-retry"
 gem "csv"
-#gem "rmagick", "~> 4.3.0"
+gem "rmagick", "~> 4.3.0"
 gem "html-proofer", "~> 5.1.0"
 gem "rake", "~> 13.3.1"
 
@@ -24,6 +24,6 @@ group :jekyll_plugins do
   gem "jekyll-include-cache"
   gem "jekyll-algolia"
   gem "jekyll-redirect-from"
-  #gem "jekyll-responsive-image"
+  gem "jekyll-responsive-image"
   gem "jekyll-remote-theme"
 end
