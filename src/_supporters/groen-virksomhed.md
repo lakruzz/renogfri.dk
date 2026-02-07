@@ -1,5 +1,4 @@
 ---
-layout: supporter
 name: Grøn Virksomhed A/S
 tagline: Bæredygtighed i praksis
 logo: /assets/images/supporters/groen-virksomhed.svg

@@ -36,7 +36,14 @@ namespace :proofer do
         %r{linkedin\.com},
         %r{twitter\.com},
         %r{instagram\.com},
-        %r{lakruzz\.com}
+        %r{lakruzz\.com},
+        %r{example-.*\.dk},
+        %r{facebook\.com},
+        %r{x\.com},
+        %r{borgerforslag\.dk},
+        %r{cdn\.tailwindcss\.com},
+        %r{cdn\.jsdelivr\.net},
+        %r{fonts\.googleapis\.com}
       ]
     }
     
@@ -59,7 +66,13 @@ namespace :proofer do
         %r{twitter\.com},
         %r{instagram\.com},
         %r{lakruzz\.com},
-        %r{example-.*\.dk}
+        %r{example-.*\.dk},
+        %r{facebook\.com},
+        %r{x\.com},
+        %r{borgerforslag\.dk},
+        %r{cdn\.tailwindcss\.com},
+        %r{cdn\.jsdelivr\.net},
+        %r{fonts\.googleapis\.com}
       ]
     }
     

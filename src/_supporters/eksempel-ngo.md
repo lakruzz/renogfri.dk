@@ -1,5 +1,4 @@
 ---
-layout: supporter
 name: Eksempel NGO
 tagline: Kæmper for en sundere fremtid
 logo: /assets/images/supporters/example-ngo.svg

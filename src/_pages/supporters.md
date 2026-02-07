@@ -1,7 +1,5 @@
 ---
-layout: default
 title: Vores Støtter
-permalink: /supporters/
 ---
 
 <div class="bg-organic-base min-h-screen py-16">

@@ -108,6 +108,7 @@ The pre-commit hook in `.githooks/pre-commit` runs the internal link check befor
 - **CLI Output**: Avoid adding `print` or `puts` statements to CLI tools. If nothing happened, nothing should be printed.
 - **Jekyll Structure**: Follow standard Jekyll conventions. Content pages are in the root of `src/`, reusable modules are in `src/_includes/`, and layouts are in `src/_layouts/`.
 - **Separation of Concerns**: Honor the principle of separating "what" (content in `.md` files) from "how" (presentation in layouts and includes). Use Jekyll's includes and layouts to keep Markdown files clean of HTML and scripts. When Markdown files are cluttered with HTML, identify reusable snippets to move into includes.
+- **Collections**: All Jekyll collections should be configured with `defaults` in `_config.yml` to set common properties like `layout` and `permalink`. Individual files within collections should not set these properties unless they need to override the defaults. This keeps the collection files clean and maintainable.
 
 ## RAG (Retrieval-Augmented Generation)
 

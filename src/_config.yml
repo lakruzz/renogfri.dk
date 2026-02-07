@@ -8,11 +8,31 @@ markdown: kramdown
 plugins:
   - jekyll-feed
 
+# Include the _pages directory in the build
+include:
+  - _pages
+
 # Collections
 collections:
   supporters:
     output: true
-    permalink: /supporter/:name/
+
+# Defaults
+defaults:
+  # Defaults for _supporters collection
+  - scope:
+      path: ""
+      type: "supporters"
+    values:
+      layout: "supporter"
+      permalink: /supporter/:name/
+  # Defaults for _pages (built-in pages, not a collection)
+  - scope:
+      path: "_pages"
+      type: "pages"
+    values:
+      layout: "default"
+      permalink: /:basename/
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
