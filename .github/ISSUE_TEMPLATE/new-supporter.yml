@@ -77,6 +77,37 @@ body:
       description: URL til jeres X/Twitter profil
       placeholder: https://x.com/jeresorganisation
 
+  - type: input
+    id: contact_name
+    attributes:
+      label: Kontaktperson - Navn (valgfrit)
+      description: Navn på kontaktperson for organisationen
+      placeholder: f.eks. "Anders Andersen"
+
+  - type: input
+    id: contact_email
+    attributes:
+      label: Kontaktperson - Email (valgfrit)
+      description: Email til kontaktperson
+      placeholder: f.eks. "anders@jeres-organisation.dk"
+
+  - type: input
+    id: contact_phone
+    attributes:
+      label: Kontaktperson - Telefon (valgfrit)
+      description: Telefonnummer til kontaktperson
+      placeholder: f.eks. "+45 12 34 56 78"
+
+  - type: dropdown
+    id: contact_visible
+    attributes:
+      label: Vis kontaktoplysninger på hjemmesiden?
+      description: Skal kontaktoplysningerne vises offentligt på supporter-siden?
+      options:
+        - "Nej"
+        - "Ja"
+      default: 0
+
   - type: textarea
     id: logo
     attributes:

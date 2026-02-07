@@ -3,9 +3,10 @@ layout: supporter
 name: Grøn Virksomhed A/S
 tagline: Bæredygtighed i praksis
 logo: /assets/images/supporters/groen-virksomhed.svg
-website: https://groenvirksomhed.dk
-instagram: https://instagram.com/groenvirksomhed
-x: https://x.com/groenvirksomhed
+media:
+  website: https://groenvirksomhed.dk
+  instagram: https://instagram.com/groenvirksomhed
+  x: https://x.com/groenvirksomhed
 ---
 
 Som en virksomhed, der producerer økologiske fødevarer, ved vi hvor vigtigt det er at gøre gode fødevarer tilgængelige for alle.
