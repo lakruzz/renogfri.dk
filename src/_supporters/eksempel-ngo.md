@@ -7,6 +7,11 @@ media:
   website: https://example-ngo.dk
   linkedin: https://linkedin.com/company/example-ngo
   facebook: https://facebook.com/examplengo
+contact:
+  name: Jane Doe
+  email: jd@example-ngo.dk
+  phone: +45 20 21 22 23
+  visible: true
 ---
 
 Vi er en fiktiv NGO, der arbejder for at fremme folkesundheden i Danmark. Vi støtter forslaget om 0-moms på rene råvarer, fordi vi tror på, at økonomiske incitamenter kan være med til at skabe bedre madkundskab og sundere vaner.
