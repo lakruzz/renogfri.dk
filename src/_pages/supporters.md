@@ -1,5 +1,4 @@
 ---
-layout: default
 title: Vores Støtter
 permalink: /supporters/
 ---

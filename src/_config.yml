@@ -12,7 +12,25 @@ plugins:
 collections:
   supporters:
     output: true
-    permalink: /supporter/:name/
+  pages:
+    output: true
+
+# Defaults
+defaults:
+  # Defaults for _supporters collection
+  - scope:
+      path: ""
+      type: "supporters"
+    values:
+      layout: "supporter"
+      permalink: /supporter/:name/
+  # Defaults for _pages collection
+  - scope:
+      path: "_pages"
+      type: "pages"
+    values:
+      layout: "default"
+      permalink: /:title/
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
