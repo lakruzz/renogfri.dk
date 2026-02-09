@@ -18,8 +18,13 @@
             <!-- Mobile Hamburger Button -->
             <div class="md:hidden flex items-center">
                 <button id="mobile-menu-button" type="button" class="text-gray-600 hover:text-organic-green focus:outline-none focus:text-organic-green" aria-label="Toggle menu">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <!-- Hamburger Icon -->
+                    <svg id="hamburger-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <!-- Close (X) Icon -->
+                    <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -28,7 +33,7 @@
     
     <!-- Mobile Navigation Menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-organic-card border-t border-gray-200">
-        <div class="px-2 pt-2 pb-3 space-y-1">
+        <div class="px-2 pt-2 pb-3 space-y-1 text-right">
             <a href="/#concept" class="mobile-menu-link block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-organic-green hover:bg-organic-base">Konceptet</a>
             <a href="/#simulator" class="mobile-menu-link block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-organic-green hover:bg-organic-base">Din Besparelse</a>
             <a href="/#economics" class="mobile-menu-link block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-organic-green hover:bg-organic-base">Økonomien</a>

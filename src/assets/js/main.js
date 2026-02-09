@@ -76,6 +76,8 @@ function initMobileMenu() {
   const mobileMenuButton = document.getElementById("mobile-menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
   const mobileMenuLinks = document.querySelectorAll(".mobile-menu-link");
+  const hamburgerIcon = document.getElementById("hamburger-icon");
+  const closeIcon = document.getElementById("close-icon");
 
   if (!mobileMenuButton || !mobileMenu) return;
 
@@ -85,9 +87,15 @@ function initMobileMenu() {
     if (isHidden) {
       mobileMenu.classList.remove("hidden");
       mobileMenuButton.setAttribute("aria-expanded", "true");
+      // Switch to X icon
+      hamburgerIcon.classList.add("hidden");
+      closeIcon.classList.remove("hidden");
     } else {
       mobileMenu.classList.add("hidden");
       mobileMenuButton.setAttribute("aria-expanded", "false");
+      // Switch back to hamburger icon
+      hamburgerIcon.classList.remove("hidden");
+      closeIcon.classList.add("hidden");
     }
   });
 
@@ -96,6 +104,9 @@ function initMobileMenu() {
     link.addEventListener("click", function () {
       mobileMenu.classList.add("hidden");
       mobileMenuButton.setAttribute("aria-expanded", "false");
+      // Switch back to hamburger icon
+      hamburgerIcon.classList.remove("hidden");
+      closeIcon.classList.add("hidden");
     });
   });
 
@@ -107,6 +118,9 @@ function initMobileMenu() {
     if (!isClickInside && !mobileMenu.classList.contains("hidden")) {
       mobileMenu.classList.add("hidden");
       mobileMenuButton.setAttribute("aria-expanded", "false");
+      // Switch back to hamburger icon
+      hamburgerIcon.classList.remove("hidden");
+      closeIcon.classList.add("hidden");
     }
   });
 }
