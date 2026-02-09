@@ -31,3 +31,15 @@ body {
 .toggle-checkbox:checked + .toggle-label {
     background-color: #2F855A;
 }
+
+/* Mobile Menu Animations */
+#mobile-menu {
+    transition: max-height 0.3s ease-in-out;
+    overflow: hidden;
+}
+#mobile-menu.hidden {
+    max-height: 0;
+}
+#mobile-menu:not(.hidden) {
+    max-height: 500px;
+}
