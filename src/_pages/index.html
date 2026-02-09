@@ -246,18 +246,7 @@ permalink: /
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
       <!-- Chart 1: Cost Comparison -->
-      <div class="bg-white p-6 rounded-lg shadow">
-        <h3 class="text-lg font-bold text-gray-700 mb-4 text-center">
-          Samfundsøkonomisk Balance (Mia. DKK)
-        </h3>
-        <div class="chart-container">
-          <canvas id="costChart"></canvas>
-        </div>
-        <p class="text-xs text-gray-500 mt-4 text-center">
-          Kilde: Estimat baseret på Finansministeriets tal og sundhedsøkonomiske
-          analyser.
-        </p>
-      </div>
+      {% include cost-chart.html %}
 
       <!-- Textual Context -->
       <div class="space-y-6">
