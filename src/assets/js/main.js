@@ -5,7 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function initCostChart() {
-  const ctx = document.getElementById("costChart").getContext("2d");
+  const chartElement = document.getElementById("costChart");
+  if (!chartElement) return; // Chart not on this page
+  
+  const ctx = chartElement.getContext("2d");
 
   new Chart(ctx, {
     type: "bar",
