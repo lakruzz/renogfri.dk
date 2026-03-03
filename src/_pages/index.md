@@ -2,6 +2,7 @@
 layout: default
 title: Gør det sunde valg til det billigste valg
 permalink: /
+image: /assets/images/og-default.png
 ---
 
 <!-- Hero Section -->
@@ -229,17 +230,17 @@ permalink: /
       </h2>
       <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
         Vores forslag kræver en investering på cirka 17 mia. kr. det er 11 mia
-        mere ned regeringens nuværende ramme på 6 mia. kr. Vi vurderer at 
-        det retfærdiggøres med baggrund i, at danske husstande i dag betaler 
+        mere ned regeringens nuværende ramme på 6 mia. kr. Vi vurderer at
+        det retfærdiggøres med baggrund i, at danske husstande i dag betaler
         anslået 6 mia. kr. ekstra i fødevaremoms hvert år på grund af de seneste
         få års historisk høje inflation på fødevarer.
       </p>
       <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-        Forslaget er derfor ikke blot en ny udgift, men en nødvendig 'pay-back' 
-        — en tilbagerulning af den utilsigtede og socialt skæve skattestigning, der 
+        Forslaget er derfor ikke blot en ny udgift, men en nødvendig 'pay-back'
+        — en tilbagerulning af den utilsigtede og socialt skæve skattestigning, der
         har ramt familiernes madbudgetter. Kombineret med de langsigtede besparelser
         på udgifter til livsstilssygdomme, som i dag ligger på over 12 mia. kr om året
-       er vores forslag ikke blot socialt ansvarligt, men også en sund økonomisk 
+       er vores forslag ikke blot socialt ansvarligt, men også en sund økonomisk
        investering i Danmarks fremtid."
       </p>
     </div>

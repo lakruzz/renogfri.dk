@@ -2,11 +2,14 @@ title: Ren & Fri
 description: Borgerforslag om 0-moms på rene råvarer.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://renogfri.dk" # the base hostname & protocol for your site, e.g. http://example.com
+image: /assets/images/og-default.png
+logo: /assets/images/og-default.png
 
 # Build settings
 markdown: kramdown
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
 
 # Include the _pages directory in the build
 include:
